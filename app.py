@@ -9,8 +9,14 @@ st.title("📊 AI Visual Business, Cleaning & MIS Analyst")
 
 # ---------------- 1. SIDEBAR CONFIGURATION ----------------
 st.sidebar.header("⚙️ Configuration")
-api_key = st.sidebar.text_input("Enter Gemini API Key", type="password")
-st.sidebar.markdown("[Get free API key](https://aistudio.google.com/)")
+
+# Automatically load from Streamlit Secrets if available
+if "GEMINI_API_KEY" in st.secrets:
+    api_key = st.secrets["GEMINI_API_KEY"]
+    st.sidebar.success("✅ API Key active from Secrets")
+else:
+    api_key = st.sidebar.text_input("Enter Gemini API Key", type="password")
+    st.sidebar.markdown("[Get free API key](https://aistudio.google.com/)")
 
 # ---------------- 2. FILE UPLOADER & INGESTION ----------------
 uploaded_file = st.file_uploader("Upload an Excel or CSV file", type=["csv", "xlsx"])
